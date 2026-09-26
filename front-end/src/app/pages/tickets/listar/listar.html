@@ -25,7 +25,7 @@
                 <td>{{ticket.status}}</td>
                 <td>
                     @if(ticket.status === "ABERTO"){
-                    <button>Associar</button>
+                    <button (click)="abrirModalAssociar(ticket.id)">Associar</button>
                     }
                     @else if(ticket.status === "EM_ANALISE"){
                         <button>Definir Prioridade</button>
@@ -40,6 +40,52 @@
         }
 
     </tbody>
+ </table>
+   
+
+<app-modal 
+      titulo="Associar ticket"
+      [aberto]="modalAssociarAberta()"
+      (fechar)="modalAssociarAberta.set(false)">
+
+
+<div>
+    
+    <div>
+    <label for="campo-usuario">Usuario</label>
+    <select id="campo-usuario" [(ngModel)]="ticketAssociar.idUsuario">
+        @for(usuario of usuarios(); track usuario.id) {
+            @if(usuario.papel == "ATENDENTE"){
+                <option [value]="usuario.id">{{usuario.nome}}</option>
+            }
+        }
+    </select>
+    </div>
+    <!-- botoes (rodape da modal) -->
+    <button modal-acoes class="secundario"
+    (click)="modalAssociarAberta.set(false)">Cancelar</button>
+    <button modal-acoes (click)="associar()">Associar</button>
+</div>
+
+</app-modal>
+
+
+      
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
 
@@ -72,4 +118,3 @@
 
 
 
-</table>
